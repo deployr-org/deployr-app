@@ -1,0 +1,17 @@
+image: ubuntu
+version: '{branch}-{build}'
+skip_tags: true
+configuration: Release
+skip_commits:
+  message: /[\[(^](do\s*n[o']?t\s*merge|wip|dnm)[\]):]/
+services:
+- docker
+pull_requests:
+  do_not_increment_build_number: true
+nuget:
+  disable_publish_on_pr: true
+build_script:
+    - ps: $shorthash = $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+    - ps: $env:GIT_COMMIT_HASH = $shorthash
+    - ps: docker build -f src/deployr-app/Dockerfile . -t deployr-app:$shorthash
+        
