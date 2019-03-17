@@ -1,0 +1,53 @@
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: ($spacer * .75),
+  4: $spacer,
+  5: ($spacer * 1.5),
+  6: ($spacer * 3)
+);
+
+$sides: (top, bottom, left, right);
+
+@each $side in $sides {
+  @each $size, $length in $spacers {
+    .has-margin-#{$side}-#{$size} {
+      margin-#{$side}: $length!important;
+    }
+    .has-padding-#{$side}-#{$size} {
+      padding-#{$side}: $length!important;
+    }
+  }
+}
+
+@each $size, $length in $spacers {
+  .has-margin-#{$size} {
+    margin: $length!important;
+  }
+  .has-padding-#{$size} {
+    padding: $length!important;
+  }
+}
+
+@each $side in $sides {
+  .is-#{$side}-marginless {
+    margin-#{$side}: 0 !important;
+  }
+
+  .is-#{$side}-paddingless {
+    padding-#{$side}: 0 !important;
+  }
+}
+
+.has-margin-auto {
+  margin: auto !important;
+}
+
+@each $side in $sides {
+  .has-margin-#{$side}-auto {
+    margin-#{$side}: auto !important;
+  }
+}
+

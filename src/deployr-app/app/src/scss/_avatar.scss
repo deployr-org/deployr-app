@@ -1,0 +1,54 @@
+$alphabet: ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+
+$alphabet-colours: (
+  $grey-light, 
+  $orange, 
+  $yellow, 
+  $green, 
+  $turquoise, 
+  $cyan, 
+  $blue, 
+  $purple, 
+  $red
+);
+
+.avatar {
+  box-shadow: 0 5px 5px rgba(10,10,10,.05);
+  border: 1px solid $white;
+  position: relative;
+  margin-bottom: 0;
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1rem;
+  line-height: 2.333rem;
+  border-radius: 4rem;
+  vertical-align: middle;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #65afe0;
+  color: #fff;
+
+
+}
+
+.avatar-letter {
+  @extend .avatar;
+
+  @each $letter in $alphabet {
+    $i: index($alphabet, $letter);
+    // @warn $letter $i;
+
+    &.avatar-letter-#{$letter} {      
+      $index: ($i % length($alphabet-colours)) + 1;
+
+      background: nth($alphabet-colours, $index);
+
+      &::before {
+        content: '#{$letter}';
+      }
+    }
+  }
+}

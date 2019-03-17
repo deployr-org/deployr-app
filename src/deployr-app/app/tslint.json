@@ -36,6 +36,7 @@
     "prefer-template": true,
     "no-eval": true,
     "function-constructor": true,
+    "array-type": [ true, "generic" ],
     "space-before-function-paren": [
       true, 
       { 

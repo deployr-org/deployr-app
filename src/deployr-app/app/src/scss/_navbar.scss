@@ -1,0 +1,19 @@
+.navbar {
+  &.has-shadow {
+    box-shadow: $box-shadow;
+  }
+
+  .navbar-item {
+    .media {
+      align-items: center;
+      
+      .media-left {
+        margin-right: 0.5rem;
+      }
+
+      img {
+        max-height: none;
+      }
+    }
+  }
+}

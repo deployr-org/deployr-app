@@ -1,0 +1,7 @@
+.menu {
+  .menu-item {
+    &.is-active {
+      background-color: $primary;
+    }
+  }
+}
