@@ -1,12 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/views/Home.vue';
 import Projects from '@/features/projects/projects.vue';
 import ProjectList from '@/features/projects/project-list.vue';
 import ProjectDetails from '@/features/projects/project-details.vue';
+import ProjectDeployments from '@/features/projects/project-deployments.vue';
+import ProjectSettings from '@/features/projects/project-settings.vue';
+import ProjectTeams from '@/features/projects/project-teams.vue';
+import ProjectUsers from '@/features/projects/project-users.vue';
+import ProjectNotifications from '@/features/projects/project-notifications.vue';
 import Teams from '@/features/teams/teams.vue';
 import TeamList from '@/features/teams/team-list.vue';
 import TeamDetails from '@/features/teams/team-details.vue';
+import TeamProjects from '@/features/teams/team-projects.vue';
+import TeamSettings from '@/features/teams/team-settings.vue';
+import TeamUsers from '@/features/teams/team-users.vue';
+import TeamNotifications from '@/features/teams/team-notifications.vue';
 import Settings from '@/features/settings/settings.vue';
 import SettingList from '@/features/settings/setting-list.vue';
 
@@ -17,93 +25,168 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'home',
-      component: Home,
       meta: {
         breadcrumbTitle: 'home',
+      },
+      redirect: { name: 'project-list' },
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
+      meta: {
+        breadcrumbTitle: 'projects',
+        // ignoreBreadcrumb: true,
       },
       redirect: { name: 'project-list' },
       children: [
         {
           path: '',
-          name: 'projects',
-          component: Projects,
+          name: 'project-list',
+          component: ProjectList,
           meta: {
             breadcrumbTitle: 'projects',
+            ignoreBreadcrumb: true,
           },
-          redirect: { name: 'project-list' },
-          children: [
-            {
-              path: 'projects',
-              name: 'project-list',
-              component: ProjectList,
-              meta: {
-                breadcrumbTitle: 'projects',
-                ignoreBreadcrumb: true,
-              },
-            },
-            {
-              path: 'projects/:name',
-              name: 'project-details',
-              component: ProjectDetails,
-              meta: {
-                breadcrumbTitle: 'project details',
-              },
-            },
-          ],
         },
         {
-          path: '',
-          name: 'teams',
-          component: Teams,
+          path: ':name',
+          name: 'project-details',
+          component: ProjectDetails,
           meta: {
-            meta: {
-              breadcrumbTitle: 'teams',
-            },
-            redirect: { name: 'team-list' },
+            breadcrumbTitle: 'project details',
           },
+          redirect: { name: 'project-deployments' },
           children: [
+            {
+              path: '',
+              name: 'project-deployments',
+              component: ProjectDeployments,
+              meta: {
+                breadcrumbTitle: 'deployments',
+                // ignoreBreadcrumb: true,
+              },
+            },
             {
               path: 'teams',
-              name: 'team-list',
-              component: TeamList,
+              name: 'project-teams',
+              component: ProjectTeams,
               meta: {
                 breadcrumbTitle: 'teams',
-                ignoreBreadcrumb: true,
               },
             },
             {
-              path: 'teams/:name',
-              name: 'team-details',
-              component: TeamDetails,
+              path: 'users',
+              name: 'project-users',
+              component: ProjectUsers,
               meta: {
-                breadcrumbTitle: 'team details',
+                breadcrumbTitle: 'users',
+              },
+            },
+            {
+              path: 'notifications',
+              name: 'project-notifications',
+              component: ProjectNotifications,
+              meta: {
+                breadcrumbTitle: 'notifications',
+              },
+            },
+            {
+              path: 'settings',
+              name: 'project-settings',
+              component: ProjectSettings,
+              meta: {
+                breadcrumbTitle: 'settings',
               },
             },
           ],
         },
+      ],
+    },
+    {
+      path: '/teams',
+      name: 'teams',
+      component: Teams,
+      meta: {
+        breadcrumbTitle: 'teams',
+        // ignoreBreadcrumb: true,
+      },
+      redirect: { name: 'team-list' },
+      children: [
         {
           path: '',
-          name: 'settings',
-          component: Settings,
+          name: 'team-list',
+          component: TeamList,
           meta: {
-            meta: {
-              breadcrumbTitle: 'settings',
-            },
-            redirect: { name: 'setting-list' },
+            breadcrumbTitle: 'teams',
+            ignoreBreadcrumb: true,
+          },
+        },
+        {
+          path: ':name',
+          name: 'team-details',
+          component: TeamDetails,
+          redirect: { name: 'team-users' },
+          meta: {
+            breadcrumbTitle: 'team details',
           },
           children: [
             {
+              path: '',
+              name: 'team-users',
+              component: TeamUsers,
+              meta: {
+                breadcrumbTitle: 'users',
+                // ignoreBreadcrumb: true,
+              },
+            },
+            {
+              path: 'teams',
+              name: 'team-projects',
+              component: TeamProjects,
+              meta: {
+                breadcrumbTitle: 'projects',
+              },
+            },
+            {
+              path: 'notifications',
+              name: 'team-notifications',
+              component: TeamNotifications,
+              meta: {
+                breadcrumbTitle: 'notifications',
+              },
+            },
+            {
               path: 'settings',
-              name: 'setting-list',
-              component: SettingList,
+              name: 'team-settings',
+              component: TeamSettings,
               meta: {
                 breadcrumbTitle: 'settings',
-                ignoreBreadcrumb: true,
               },
             },
           ],
+        },
+      ],
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings,
+      meta: {
+        breadcrumbTitle: 'settings',
+      },
+      redirect: { name: 'setting-list' },
+      children: [
+        {
+          path: '',
+          name: 'setting-list',
+          component: SettingList,
+          meta: {
+            breadcrumbTitle: 'settings',
+            ignoreBreadcrumb: true,
+          },
         },
       ],
     },

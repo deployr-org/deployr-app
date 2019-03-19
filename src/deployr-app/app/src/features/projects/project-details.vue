@@ -1,7 +1,32 @@
 <template>
   <div>
-    <h1 class="title">Project #1</h1>
-    Project details to go here...
+    <div class="row has-margin-bottom-4">
+      <div class="columns">
+        <div class="column">
+          <h1 class="title">Project details</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <div class="column is-narrow is-2">      
+          <div class="menu">
+            <ul class="menu-list">
+              <li><router-link class="menu-item" :to="{ name: 'project-deployments' }" exact>Deployments</router-link></li>
+              <li><router-link class="menu-item" :to="{ name: 'project-teams' }" exact>Teams</router-link></li>
+              <li><router-link class="menu-item" :to="{ name: 'project-users' }" exact>Users</router-link></li>
+              <li><router-link class="menu-item" :to="{ name: 'project-notifications' }" exact>Notifications</router-link></li>
+              <li><router-link class="menu-item" :to="{ name: 'project-settings' }" exact>Settings</router-link></li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="column">
+          <router-view />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -1,7 +1,25 @@
 .menu {
   .menu-item {
-    &.is-active {
-      background-color: $primary;
+    padding: 0.75rem 0.75rem 0.75rem 0; 
+    &.is-active,
+    &.router-link-active {
+      // background-color: $primary;
+      // background-color: $table-row-hover-background-color;
+      background-color: $white;
+      background-color: $white-bis;
+      background-color: $white-ter;
+      color: $primary;
+      //color: $body-color;
+      // box-shadow: $box-shadow;
     }
+
+    &:hover {
+      color: $primary;
+    }
+    &:hover:not(.is-active) {
+      background-color: transparent;
+      color: $primary;
+    }
+    
   }
 }

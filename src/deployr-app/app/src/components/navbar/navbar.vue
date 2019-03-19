@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar is-fixed-top has-shadow is-primary is-active" role="navigation">
     <div class="navbar-brand">
-      <a class="navbar-item has-text-centered" href="/" target="_blank" rel="noopener noreferrer">
+      <a class="navbar-item has-text-centered" href="/" rel="noopener noreferrer">
         <h1 class="title is-5 has-text-white has-text-weight-bold">deployr</h1>
       </a>
 

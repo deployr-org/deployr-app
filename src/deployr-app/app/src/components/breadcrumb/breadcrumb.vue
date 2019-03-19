@@ -28,6 +28,8 @@ export default class Breadcrumb extends Vue {
   private generateBreadcrumb(): void {
       const routes = this.$route.matched.filter((route) => {
           return route.meta.ignoreBreadcrumb !== true;
+      }).filter((route) => {
+          return route.name != null;
       }).map((route) => {
           return { name: route.name, path: route.path, meta: route.meta };
       });
@@ -35,7 +37,7 @@ export default class Breadcrumb extends Vue {
       const home = routes.find((route) => route.name === 'home');
 
       if (home == null) {
-          routes.unshift({ name: 'home', path: '', meta: { title: 'Home' } });
+          routes.unshift({ name: 'home', path: '', meta: { title: 'home' } });
       }
 
       this.routes = routes;
