@@ -31,6 +31,7 @@
         <div class="column">
           <div class="box is-radiusless">
             <p>Settings stuff</p>
+            <button @click="click">Add notice</button>
           </div>
         </div>
       </div>
@@ -41,6 +42,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+let count: number = 1;
+
 @Component
-export default class SettingList extends Vue {}
+export default class SettingList extends Vue {
+
+  public click(): void {
+    this.$notice.normal({ title: `Title test #${count}`,
+      message: 'Porta nibh venenatis cras sed felis eget velit aliquet '
+      + 'sagittis id consectetur purus ut faucibus pulvinar elementum integer enim neque', duration: 5000 });
+    count += 1;
+  }
+}
 </script>

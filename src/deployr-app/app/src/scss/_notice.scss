@@ -1,0 +1,80 @@
+.notice-container {
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  margin-top: 5.5rem;
+  margin-right: 2rem;
+
+  .notice {
+    position: relative;
+    display: flex;
+    background: $white;
+    box-shadow: $box-shadow;
+    flex-direction: column;
+    align-items: center;
+    min-height: 3rem;
+    align-self: flex-end;
+    flex-direction: row-reverse;
+    width: auto;
+    width: 400px;
+    margin-bottom: 1rem;
+    //width: 400px;
+    transition: all 1s;
+    // border: 1px solid $info;
+
+    .delete {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      &::after,
+      &::before {
+        background-color: $body-color;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      .content-left {
+        flex-basis: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+        //border-top-left-radius: 3px;
+        //border-bottom-left-radius: 3px;
+      }
+      .content-right {
+        padding: 1.5rem 1.5rem 1.5rem 0;
+        flex: 1;
+
+        .title {
+          font-weight: 700;
+          font-size: 1rem;
+          max-width: 90%;
+        }
+
+        .message {
+          background: none;
+          border-radius: initial;
+        }
+      }
+    }
+
+    @each $name, $pair in $colors {
+      $color: nth($pair, 1);
+      $color-invert: nth($pair, 2);
+      
+      &.is-#{$name} {
+        .content-left {
+          border-left: 2px solid $color;
+          color: $color;
+        }
+      }
+    }
+  }
+}

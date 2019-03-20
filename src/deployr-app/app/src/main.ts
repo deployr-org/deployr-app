@@ -3,11 +3,14 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 import Buefy from 'buefy';
+import Notice from '@/components/notice';
 import { slugify } from '@/utilities/string';
 import '@/scss/app.scss';
 
 Vue.config.productionTip = false;
 Vue.filter('slugify', slugify);
+
+Vue.use(Notice);
 Vue.use(Buefy);
 
 new Vue({
