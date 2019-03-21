@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade" appear>
+  <transition name="slide" appear :duration="{ enter: 250, leave: 800 }">
     <article v-show="isVisible" class="notice" :class="`is-${type}`">
       <button v-if="closable" class="delete" type="button" @click="close" />
       <div class="content">
@@ -17,15 +17,19 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { TaskQueue } from './task-queue';
+
+const queue = new TaskQueue();
 
 @Component
-export default class Notification extends Vue {
+export default class Notice extends Vue {
   // @Prop({ type: Boolean, default: true }) public visible!: boolean;
   @Prop({ type: String }) public title!: string | null;
   @Prop({ type: String }) public message!: string | null;
   @Prop({ type: String, default: 'primary' }) public type!: string | null;
   @Prop({ type: Boolean, default: true }) public closable!: boolean;
   @Prop({ type: Boolean, default: true }) public queue!: boolean;
+  @Prop({ type: Boolean, default: false }) public indefinite!: boolean;
   @Prop({ type: Number, default: 5000 }) public duration!: number | null;
 
   private isVisible: boolean = false;
@@ -45,28 +49,15 @@ export default class Notification extends Vue {
         return null;
     }
   }
-  public shouldQueue(): boolean {
-    if (!this.queue) {
-      return false;
-    }
-
-    return this.container!.childElementCount > 0;
-  }
   public open(): void {
-    if (this.shouldQueue()) {
-      setTimeout(() => this.open(), 250);
+    this.container!.insertAdjacentElement('beforeend', this.$el);
+
+    if (this.indefinite) {
+      this.openInternal();
       return;
     }
 
-    this.container!.insertAdjacentElement('beforeend', this.$el);
-
-    if (this.duration != null) {
-      setTimeout(() => { this.close(); }, this.duration);
-    }
-
-    this.isVisible = true;
-    this.$emit('open');
-    this.$emit('visible', true);
+    queue.add({ func: this.openInternal, delay: this.duration! + 1000 });
   }
   public close(): void {
     this.isVisible = false;
@@ -81,7 +72,7 @@ export default class Notification extends Vue {
         } else if (this.$el.parentNode != null) {
             this.$el.parentNode.removeChild(this.$el);
         }
-    },         250);
+    },         1000);
   }
   public beforeMount(): void {
     this.setupContainer();
@@ -104,6 +95,15 @@ export default class Notification extends Vue {
     body.appendChild(container!);
 
     this.container = container;
+  }
+  private openInternal(): void {
+    if (!this.indefinite && this.duration != null) {
+      setTimeout(() => { this.close(); }, this.duration);
+    }
+
+    this.isVisible = true;
+    this.$emit('open');
+    this.$emit('visible', true);
   }
 }
 </script>
