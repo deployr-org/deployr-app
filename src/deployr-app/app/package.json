@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "buefy": "^0.7.3",
-    "typescript": "^3.3.3333",
-    "vue": "^2.6.9",
+    "typescript": "^3.3.4000",
+    "vue": "^2.6.10",
     "vue-class-component": "^7.0.0",
     "vue-property-decorator": "^8.0.0",
     "vue-router": "^3.0.1",
@@ -25,7 +25,7 @@
     "sass": "^1.17.3",
     "sass-loader": "^7.1.0",
     "tslint-consistent-codestyle": "^1.15.1",
-    "vue-template-compiler": "^2.6.9"
+    "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
