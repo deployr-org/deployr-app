@@ -10,6 +10,12 @@ pull_requests:
   do_not_increment_build_number: true
 nuget:
   disable_publish_on_pr: true
+notifications:
+- provider: Slack
+  incoming_webhook: https://hooks.slack.com/services/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
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
 build_script:
     - ps: $shorthash = $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
     - ps: $env:GIT_COMMIT_HASH = $shorthash
