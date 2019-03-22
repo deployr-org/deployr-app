@@ -31,20 +31,24 @@
       </div>
     </div>
 
-    <div v-for="(team, index) in teams" :key="index" class="box is-radiusless">
-      <div class="columns is-vcentered">
-        <div class="column">
-         <h2>{{ team }}</h2>
-         <p class="is-size-7">{{ Math.floor(Math.random() * 20) }} members</p>
-        </div>
-        <div class="column is-narrow">
-          <div class="buttons">
-            <router-link class="button is-white" :to="{ name: 'team-details', params: { name: slugify(team) } }">
-               <b-icon pack="fas" icon="angle-right" type="is-primary"></b-icon>
-            </router-link>
+    <div class="team-list">
+      <nested-list v-for="team in teams" :key="team.name" :item="team" :nodes="team.teams" :depth="0" key-prop="name" child-prop="teams">
+        <template slot-scope="{ item, onToggle }">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h2><a class="is-text is-white">{{ item.name }}</a></h2>
+            </div>
+            <div class="column is-narrow">
+              <span class="is-size-7">{{ item.members }} members</span>
+            </div>
+            <div class="column is-narrow">
+              <a class="is-size-7" :style="{ 'padding-right': item.teams.length < 1 ? '21px' : '' }" @click="() => { teamCount(item) > 0 ? onToggle() : null }">{{ teamCount(item) }} teams 
+                <b-icon pack="fas" v-if="item.teams.length > 0" icon="angle-down" type="is-primary"></b-icon>
+              </a>
+            </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </nested-list>
     </div>
   </div>
 </template>
@@ -52,21 +56,51 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { slugify } from '@/utilities/string';
+import { Team } from './team';
+import NestedList from '@/components/nested-list/nested-list.vue';
 
-@Component
+@Component({
+  components: {
+    NestedList,
+  },
+})
 export default class Projects extends Vue {
-  public get teams(): Array<string> {
+  public get teams(): Array<Team> {
     return [
-      'Team #1',
-      'Team #2',
-      'Team #3',
-      'Team #4',
-      'Team #5',
+      { name: 'Team #1', members: 1, teams: [ { name: 'Nested Team #1', members: 2, teams: [] } ] },
+      { name: 'Team #2', members: 3, teams: [ { name: 'Nested Team #2', members: 2, teams: [] } ] },
+      { name: 'Team #3', members: 5, teams: [] },
+      { name: 'Team #4', members: 2, teams: [ { name: 'Nested Team #4', members: 4, teams: [] } ] },
+      { name: 'Team #5', members: 0, teams:
+        [
+          { name: 'Nested Team #5', members: 1, teams: [] },
+          { name: 'Nested Team #5 - 2', members: 3, teams:
+            [
+              { name: 'Nested Nested Team #5 - 1', members: 6, teams: [] },
+              { name: 'Nested Nested Team #5 - 2', members: 2, teams: [] },
+            ],
+          },
+        ],
+      },
     ];
   }
 
   public slugify(value: string): string {
     return slugify(value);
+  }
+
+  private teamCount(team: Team): number {
+    const flatten = (teams: Array<Team>): Array<Team> => {
+      const x = teams.reduce((acc, val) => {
+        return acc.concat(flatten(val.teams));
+      // tslint:disable-next-line:align
+      }, [ ...teams ]);
+
+      return x;
+    };
+
+    const result = flatten(team.teams);
+    return result.length;
   }
 }
 </script>

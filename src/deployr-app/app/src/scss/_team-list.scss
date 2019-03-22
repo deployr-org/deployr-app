@@ -1,0 +1,36 @@
+$start: 1;
+
+.team-list {
+  // 1.25rem;
+  .list-item {
+    background-color: $white;
+    //padding: 1.25rem;
+    padding: 0;
+
+    @while $start < 16 {
+      &.has-depth-#{$start} {
+        margin-left: #{$start}rem;
+      }
+      $start: $start + 1;
+    }
+  }
+
+  .has-children {
+    padding: 0;
+  }
+
+  .nested-list {
+    &.is-root {
+      margin-bottom: 1.5rem;
+      box-shadow: $box-shadow;
+
+      .nested-list .list-item {
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    
+    .list-item {
+      padding: 1.25rem;
+    }
+  }
+}
