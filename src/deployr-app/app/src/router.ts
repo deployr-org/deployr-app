@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Dashboard from '@/features/dashboard/dashboard.vue';
 import Projects from '@/features/projects/projects.vue';
 import ProjectList from '@/features/projects/project-list.vue';
 import ProjectDetails from '@/features/projects/project-details.vue';
@@ -10,6 +11,7 @@ import ProjectUsers from '@/features/projects/project-users.vue';
 import ProjectNotifications from '@/features/projects/project-notifications.vue';
 import Teams from '@/features/teams/teams.vue';
 import TeamList from '@/features/teams/team-list.vue';
+import TeamCreation from '@/features/teams/team-creation.vue';
 import TeamDetails from '@/features/teams/team-details.vue';
 import TeamProjects from '@/features/teams/team-projects.vue';
 import TeamSettings from '@/features/teams/team-settings.vue';
@@ -17,6 +19,8 @@ import TeamUsers from '@/features/teams/team-users.vue';
 import TeamNotifications from '@/features/teams/team-notifications.vue';
 import Settings from '@/features/settings/settings.vue';
 import SettingList from '@/features/settings/setting-list.vue';
+import Store from '@/store';
+import { Team } from './features/teams/team';
 
 Vue.use(Router);
 
@@ -30,7 +34,7 @@ export default new Router({
       meta: {
         breadcrumbTitle: 'home',
       },
-      redirect: { name: 'project-list' },
+      component: Dashboard,
     },
     {
       path: '/projects',
@@ -125,12 +129,30 @@ export default new Router({
           },
         },
         {
+          path: 'create',
+          name: 'team-creation',
+          component: TeamCreation,
+          meta: {
+            breadcrumbTitle: 'create team',
+          },
+        },
+        {
           path: ':name',
           name: 'team-details',
           component: TeamDetails,
           redirect: { name: 'team-users' },
           meta: {
             breadcrumbTitle: 'team details',
+          },
+          props: (route) => {
+            const getTeamBySlug: (slug: string) => Team | null = Store.getters['team/teamBySlug'];
+            const team = getTeamBySlug(route.params.name);
+
+            if (team != null) {
+              route.matched[1].meta.breadcrumbTitle = team.name.toLowerCase();
+            }
+
+            return { team };
           },
           children: [
             {

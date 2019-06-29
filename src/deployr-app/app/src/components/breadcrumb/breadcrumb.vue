@@ -1,5 +1,5 @@
 <template>
-  <nav class="breadcrumb" aria-label="breadcrumbs">
+  <nav class="breadcrumb has-shadow" aria-label="breadcrumbs">
     <ul>
       <li class="breadcrumb-item" v-for="(breadcrumb, index) in breadcrumbs" :key="index" :class="{ 'is-active': index == breadcrumbs.length - 1 }">
         <router-link v-if="index < breadcrumbs.length - 1" :to="{ name: breadcrumb.name, params: breadcrumb.params }" exact>{{ breadcrumb.meta.breadcrumbTitle || breadcrumb.meta.title || breadcrumb.name }}</router-link>

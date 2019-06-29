@@ -1,7 +1,7 @@
 <template>
   <ul class="nested-list" :class="css">
     <li :class="['list-item', `has-depth-${depth}`]"><slot :item="item" :onToggle="onToggle"/></li>
-    <template  v-if="showChildren">
+    <template v-if="showChildren">
       <tree-list v-for="node in nodes" :item="node" :key="node[keyProp]" :nodes="node[childProp]" :child-prop="childProp" :keyProp="keyProp" :depth="depth + 1">
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope"><slot :name="slot" v-bind="scope" /></template>
       </tree-list>
@@ -30,6 +30,7 @@ export default class TreeList extends Vue {
       `has-depth-${this.depth}`,
       this.nodes.length > 0 ? 'has-children' : null,
       this.depth === 0 ? 'is-root' : null,
+      this.showChildren ? 'is-open' : null,
     ];
   }
 

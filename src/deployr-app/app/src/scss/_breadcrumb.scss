@@ -1,11 +1,13 @@
-.navbar {
-  min-height: 5rem;
+.breadcrumb {
+  @extend .navbar;
 
   &.has-shadow {
     box-shadow: $box-shadow;
   }
 
-  .navbar-item {
+  .breadcrumb-item {
+    @extend .navbar-item;
+    
     .media {
       align-items: center;
       

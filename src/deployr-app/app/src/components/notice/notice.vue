@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" appear :duration="{ enter: 250, leave: 800 }">
+  <transition name="slide" appear :appear-to-class="container.childElementCount > 0 ? '' : 'slide-enter'" :duration="{ enter: 500, leave: 500 }">
     <article v-show="isVisible" class="notice" :class="`is-${type}`">
       <button v-if="closable" class="delete" type="button" @click="close" />
       <div class="content">
@@ -57,7 +57,7 @@ export default class Notice extends Vue {
       return;
     }
 
-    queue.add({ func: this.openInternal, delay: this.duration! + 1000 });
+    queue.add({ func: this.openInternal, delay: this.duration! + 500 });
   }
   public close(): void {
     this.isVisible = false;
@@ -72,7 +72,7 @@ export default class Notice extends Vue {
         } else if (this.$el.parentNode != null) {
             this.$el.parentNode.removeChild(this.$el);
         }
-    },         1000);
+    },         500);
   }
   public beforeMount(): void {
     this.setupContainer();

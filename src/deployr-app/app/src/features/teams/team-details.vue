@@ -31,8 +31,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Team } from '@/features/teams/team';
 
 @Component
 export default class TeamDetails extends Vue {
+  @Prop({ required: true, type: Object }) public team!: Team;
 }
 </script>

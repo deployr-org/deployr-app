@@ -1,0 +1,122 @@
+#menu,
+.sub-menu {
+  background: $primary;
+  color: $white;
+  padding: 0;
+  min-width: 6rem;
+  text-align: center;
+ 
+  .menu-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+
+    a {
+      color: lighten($primary, 30%);
+
+      &:hover {
+        color: $white;
+        background: none;
+      }
+
+      &.router-link-active,
+      &.router-link-exact-active {
+        color: $white;
+
+        &::after {
+          content: '';
+          position: absolute;
+          right: -5px;
+          top: calc(50% - 2.5px);
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+          border-left: 5px solid $primary;
+          clear: both;
+        }
+
+        .title {
+          color: $white;
+        }
+      }
+    }
+
+    .icon {
+      display: block;
+      //fill: darken($white, 90%);
+      width: 1.7rem;
+      height: 1.7rem;
+      margin: 0 auto;
+
+      svg {
+        fill: none;
+        stroke-width: 1.5;
+        stroke: currentColor;
+        width: 1.7rem;
+        height: 1.7rem;
+      }
+    }
+
+    .title {
+      color: lighten($primary, 30%);
+      font-size: 0.85rem;
+      font-weight: 400;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.sub-menu {
+  background: darken($primary, 15%);
+  //background: $body-background-color;
+  //color: $white;
+  box-shadow: $box-shadow;
+  //padding: 0;
+  min-width: 15rem;
+
+  ul {
+    //text-align: left; 
+    padding: 5rem 0 0 0;
+
+    li {
+      &.menu-item {
+        //padding: 0.5rem 1rem;
+        //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(103, 59, 184, 0.3);
+        //min-height: 5.2714rem;
+        padding: 1rem 0;
+        display: flex;
+
+        a {
+          color: $body-color;
+          color: lighten($primary, 30%);
+          display: flex;
+          flex-direction: initial;
+          flex-grow: 1;
+          align-items: center;
+          padding: 0 2rem;
+
+          &::after {
+            display: none;
+          }
+        }
+
+        .icon {
+          //display: none;
+          margin: 0;
+
+          svg {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+
+        .title {
+          display: block;
+          margin: 0 0 0 1rem;
+        }
+      }
+    }
+  }
+}
